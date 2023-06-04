@@ -14,29 +14,63 @@ export default function imageGeneration(props) {
     }
 
     return (
-        <div>
-        <div className="flex m-20">
-            <textarea
-                className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                rows="3"
-                style={{resize: 'none'}}
-                placeholder="Prompt"
-                value={prompt}
-                onChange={e => updatePrompt(e.target.value)}
-                onKeyDown={(event) => {
-                    if (event.keyCode === 13) {
-                        event.preventDefault();
-                    }
-                }}
-            />
-            <button
-                type="button"
-                className="ml-2 px-4 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                onClick={(e) => generateImage(prompt)}
-            >
-                Generate
-            </button>
-        </div>
+        <div className='flex flex-col items-center'>
+            <div className="flex w-1/2 mt-20 mb-10">
+                <textarea
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+                    rows="3"
+                    style={{resize: 'none'}}
+                    placeholder="Prompt"
+                    value={prompt}
+                    onChange={e => updatePrompt(e.target.value)}
+                    onKeyDown={(event) => {
+                        if (event.keyCode === 13) {
+                            event.preventDefault();
+                        }
+                    }}
+                />
+                <button
+                    type="button"
+                    className="ml-2 px-4 py-2.5 text-sm font-medium text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                    onClick={(e) => generateImage(prompt)}
+                >
+                    Generate
+                </button>
+            </div>
+            <div className='w-3/5 border rounded bg-zinc-200'>
+                <div className='m-3 border h-[50vh] bg-white'>
+                    image here
+                </div>
+
+                {/*  edit section  */}
+                <div className={'w-full my-5 mx-6'}>
+                    <div className={'mb-2'}>
+                        <label className={'text-sm'}>Sampling Method</label>
+                        <select className={'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-1/2 px-1 py-2'}>
+                            <option>option 1</option>
+                            <option>option 2</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className={'text-sm'}>Width</label>
+                        <br/>
+                        <input
+                            type="range"
+                            className="w-1/2 h-2 bg-white rounded-lg appearance-none cursor-pointer"
+                            onChange={()=>{}}
+                        />
+                    </div>
+                    <div>
+                        <label className={'text-sm'}>Height</label>
+                        <br/>
+                        <input
+                            type="range"
+                            className="w-1/2 h-2 bg-white rounded-lg appearance-none cursor-pointer"
+                            onChange={()=>{}}
+                        />
+                    </div>
+                </div>
+            </div>
 
         {loading ? (
             <div>
