@@ -6,7 +6,7 @@ const Navbar = () => (
   <div>
     <div className="container flex flex-wrap items-center justify-between mx-auto">
       <Link href="/">
-          Anima StudioAI
+          Anima Studios
       </Link>
       <div className="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
