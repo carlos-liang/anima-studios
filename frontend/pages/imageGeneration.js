@@ -2,6 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import axios from "axios";
 
+
 export default function imageGeneration(props) {
     const [image, updateImage] = useState();
     const [prompt, updatePrompt] = useState();
@@ -12,6 +13,19 @@ export default function imageGeneration(props) {
         const result = await axios.get(`http://127.0.0.1:8000/?prompt=${prompt}`);
         updateImage(result.data);
     }
+
+    const samplingOptions = [
+        {value:'euler-a', label:"Euler a"},
+        {value:'ddim', label:"DDIM"},
+        {value:'lms', label:"LMS"},
+        {value:'heun', label:"Heun"},
+        {value:'dpm-samplers', label:"DPM samplers"},
+        {value:'unipc', label:"UniPC"},
+    ];
+
+    const scriptOptions = [
+        {value:'none', label:"None"},
+    ]
 
     return (
         <div className='flex flex-col items-center'>
@@ -44,30 +58,94 @@ export default function imageGeneration(props) {
 
                 {/*  edit section  */}
                 <div className={'w-full my-5 mx-6'}>
+                    <div className="font-semibold">Edit Output</div>
+                    <div className='flex gap-1'>
+                        <div className={'mb-2 w-1/2'}>
+                            <label className={'text-sm'}>Sampling Method</label>
+                            <select className={'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-1/2 px-1 py-2'}>
+                                {samplingOptions.map((x,i) => <option key={i} value={x.value}>{x.label}</option>)}
+                            </select>
+                        </div>
+                        <div>
+                            <label className='text-sm'>Sampling Steps {' '}</label>
+                            <br/>
+                            <input
+                                type="number"
+                                className="w-30 bg-white rounded-lg border border-gray-300 text-gray-900 cursor-ew-resize"
+                                onChange={()=>{}}
+                            />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 w-1/2">
+                        <div>
+                            <label className={'text-sm'}>Width</label>
+                            <br/>
+                            <input
+                                type="number"
+                                className="w-30 bg-white rounded-lg border border-gray-300 text-gray-900 cursor-ew-resize"
+                                onChange={()=>{}}
+                            />
+                        </div>
+                        <div>
+                            <label className={'text-sm'}>Height</label>
+                            <br/>
+                            <input
+                                type="number"
+                                className="w-30 bg-white rounded-lg border border-gray-300 text-gray-900 cursor-ew-resize"
+                                onChange={()=>{}}
+                            />
+                        </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-3 w-full">
+                        <div>
+                            <label className={'text-sm'}>Batch Count</label>
+                            <br/>
+                            <input
+                                type="range"
+                                className="w-[500px] h-2 bg-white rounded-lg appearance-none cursor-pointer"
+                                onChange={()=>{}}
+                            />
+                        </div>
+                        <div>
+                            <label className={'text-sm'}>Batch Size</label>
+                            <br/>
+                            <input
+                                type="range"
+                                className="w-[500px] h-2 bg-white rounded-lg appearance-none cursor-pointer"
+                                onChange={()=>{}}
+                            />
+                        </div>
+                    </div>
+                    <div>
+                        <label className={'text-sm'}>CFG Scale</label>
+                        <br/>
+                        <input
+                            type="range"
+                            className="w-[500px] h-2 bg-white rounded-lg appearance-none cursor-pointer"
+                            onChange={()=>{}}
+                        />
+                    </div>
+                    <div className='flex gap-2 items-end'>
+                        <div>
+                            <label className={'text-sm'}>Seed</label>
+                            <br/>
+                            <input
+                                type="number"
+                                className="w-[500px] bg-white rounded-lg cursor-ew-resize"
+                                onChange={()=>{}}
+                            />
+                        </div>
+                        <div className='bg-blue-500 text-white h-6 w-6 rounded-lg cursor-pointer'>
+                            <div className='p-1'>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M2 7h-2v-2h2c3.49 0 5.48 1.221 6.822 2.854-.41.654-.754 1.312-1.055 1.939-1.087-1.643-2.633-2.793-5.767-2.793zm16 10c-3.084 0-4.604-1.147-5.679-2.786-.302.627-.647 1.284-1.06 1.937 1.327 1.629 3.291 2.849 6.739 2.849v3l6-4-6-4v3zm0-10v3l6-4-6-4v3c-5.834 0-7.436 3.482-8.85 6.556-1.343 2.921-2.504 5.444-7.15 5.444h-2v2h2c5.928 0 7.543-3.511 8.968-6.609 1.331-2.893 2.479-5.391 7.032-5.391z"/></svg>
+                            </div>
+                        </div>
+                    </div>
                     <div className={'mb-2'}>
-                        <label className={'text-sm'}>Sampling Method</label>
+                        <label className={'text-sm'}>Script</label>
                         <select className={'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-1/2 px-1 py-2'}>
-                            <option>option 1</option>
-                            <option>option 2</option>
+                            {scriptOptions.map((x,i) => <option key={i} value={x.value}>{x.label}</option>)}
                         </select>
-                    </div>
-                    <div>
-                        <label className={'text-sm'}>Width</label>
-                        <br/>
-                        <input
-                            type="range"
-                            className="w-1/2 h-2 bg-white rounded-lg appearance-none cursor-pointer"
-                            onChange={()=>{}}
-                        />
-                    </div>
-                    <div>
-                        <label className={'text-sm'}>Height</label>
-                        <br/>
-                        <input
-                            type="range"
-                            className="w-1/2 h-2 bg-white rounded-lg appearance-none cursor-pointer"
-                            onChange={()=>{}}
-                        />
                     </div>
                 </div>
             </div>
